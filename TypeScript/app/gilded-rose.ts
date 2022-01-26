@@ -51,13 +51,17 @@ export class GildedRose {
       }
     }
 
-    if (item.name == 'Sulfuras, Hand of Ragnaros') {
-    } else {
-      item.sellIn = item.sellIn - 1;
-    }
+    this.updateItemSellIn(item);
 
     if (item.sellIn < 0) {
       this.updateExpiredItemQuality(item);
+    }
+  }
+
+  private static updateItemSellIn(item: Item) {
+    if (item.name == 'Sulfuras, Hand of Ragnaros') {
+    } else {
+      item.sellIn = item.sellIn - 1;
     }
   }
 
