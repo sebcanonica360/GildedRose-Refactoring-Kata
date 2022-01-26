@@ -19,10 +19,20 @@ export class GildedRose {
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
-      GildedRose.updateItemQuality(this.items[i]);
+      GildedRose.ageItem(this.items[i]);
     }
 
     return this.items;
+  }
+
+  private static ageItem(item: Item) {
+    this.updateItemQuality(item);
+
+    this.updateItemSellIn(item);
+
+    if (item.sellIn < 0) {
+      this.updateExpiredItemQuality(item);
+    }
   }
 
   private static updateItemQuality(item: Item) {
@@ -49,12 +59,6 @@ export class GildedRose {
       if (item.quality > 0) {
         item.quality = item.quality - 1
       }
-    }
-
-    this.updateItemSellIn(item);
-
-    if (item.sellIn < 0) {
-      this.updateExpiredItemQuality(item);
     }
   }
 
