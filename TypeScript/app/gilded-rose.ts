@@ -52,18 +52,6 @@ export class GildedRose {
     }
   }
 
-  private static decreaseQuality(item: Item) {
-    if (item.quality > 0) {
-      item.quality = item.quality - 1
-    }
-  }
-
-  private static increaseQuality(item: Item) {
-    if (item.quality < 50) {
-      item.quality = item.quality + 1
-    }
-  }
-
   private static updateItemSellIn(item: Item) {
     if (item.name == 'Sulfuras, Hand of Ragnaros') {
     } else {
@@ -79,6 +67,18 @@ export class GildedRose {
     } else if (item.name == 'Sulfuras, Hand of Ragnaros') {
     } else {
       this.decreaseQuality(item);
+    }
+  }
+
+  private static decreaseQuality(item: Item) {
+    if (item.quality > 0) {
+      item.quality = item.quality - 1
+    }
+  }
+
+  private static increaseQuality(item: Item) {
+    if (item.quality < 50) {
+      item.quality = item.quality + 1
     }
   }
 }
