@@ -86,6 +86,10 @@ class SulfurasItemAger extends ItemAger {
 function createItemAger(item: Item): ItemAger {
   if (item.name === "Sulfuras, Hand of Ragnaros") {
     return new SulfurasItemAger(item);
+  } else if (item.name === "Aged Brie") {
+    return new AgedBrieAger(item);
+  } else if (item.name === "Backstage passes to a TAFKAL80ETC concert") {
+    return new BackstagePassesItemAger(item);
   }
   return new ItemAger(item);
 }
