@@ -10,6 +10,74 @@ export class Item {
   }
 }
 
+class ItemAger {
+  private item: Item;
+  constructor(item: Item) {
+       this.item = item;
+  }
+
+  age() {
+    this.updateItemQuality(this.item);
+
+    this.updateItemSellIn(this.item);
+
+    if (this.item.sellIn < 0) {
+      this.updateExpiredItemQuality(this.item);
+    }
+  }
+
+  private updateItemQuality(item: Item) {
+    if (item.name == 'Aged Brie') {
+      this.increaseQuality(item);
+    } else if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
+      this.increaseQuality(item);
+      if (item.sellIn < 11) {
+        this.increaseQuality(item);
+      }
+      if (item.sellIn < 6) {
+        this.increaseQuality(item);
+      }
+    } else if (item.name == 'Sulfuras, Hand of Ragnaros') {
+    } else {
+      this.decreaseQuality(item);
+    }
+  }
+
+  private updateItemSellIn(item: Item) {
+    if (item.name == 'Sulfuras, Hand of Ragnaros') {
+    } else {
+      item.sellIn = item.sellIn - 1;
+    }
+  }
+
+  private updateExpiredItemQuality(item: Item) {
+    if (item.name == 'Aged Brie') {
+      this.increaseQuality(item);
+    } else if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
+      item.quality = 0
+    } else if (item.name == 'Sulfuras, Hand of Ragnaros') {
+    } else {
+      this.decreaseQuality(item);
+    }
+  }
+
+  private decreaseQuality(item: Item) {
+    if (item.quality > 0) {
+      item.quality = item.quality - 1
+    }
+  }
+
+  private increaseQuality(item: Item) {
+    if (item.quality < 50) {
+      item.quality = item.quality + 1
+    }
+  }
+}
+
+function createItemAger(item: Item) {
+  return new ItemAger(item);
+}
+
 export class GildedRose {
   items: Array<Item>;
 
@@ -26,13 +94,8 @@ export class GildedRose {
   }
 
   private static ageItem(item: Item) {
-    this.updateItemQuality(item);
-
-    this.updateItemSellIn(item);
-
-    if (item.sellIn < 0) {
-      this.updateExpiredItemQuality(item);
-    }
+    const itemAger = createItemAger(item);
+    itemAger.age();
   }
 
   private static updateItemQuality(item: Item) {
