@@ -26,36 +26,16 @@ class ItemAger {
     }
   }
 
-  private updateItemQuality() {
-    if (this.item.name == 'Aged Brie') {
-      this.increaseQuality();
-    } else if (this.item.name == 'Backstage passes to a TAFKAL80ETC concert') {
-      this.increaseQuality();
-      if (this.item.sellIn < 11) {
-        this.increaseQuality();
-      }
-      if (this.item.sellIn < 6) {
-        this.increaseQuality();
-      }
-    } else if (this.item.name == 'Sulfuras, Hand of Ragnaros') {
-    } else {
-      this.decreaseQuality();
-    }
+  protected updateItemQuality() {
+    this.decreaseQuality();
   }
 
   protected updateItemSellIn() {
     this.item.sellIn = this.item.sellIn - 1;
   }
 
-  private updateExpiredItemQuality() {
-    if (this.item.name == 'Aged Brie') {
-      this.increaseQuality();
-    } else if (this.item.name == 'Backstage passes to a TAFKAL80ETC concert') {
-      this.item.quality = 0
-    } else if (this.item.name == 'Sulfuras, Hand of Ragnaros') {
-    } else {
-      this.decreaseQuality();
-    }
+  protected updateExpiredItemQuality() {
+    this.decreaseQuality();
   }
 
   protected decreaseQuality() {
