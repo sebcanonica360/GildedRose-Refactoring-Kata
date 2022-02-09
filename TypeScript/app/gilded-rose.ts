@@ -77,6 +77,10 @@ class SulfurasItemAger extends ItemAger {
   }
 
   protected updateItemSellIn() {}
+
+  protected updateItemQuality() {}
+
+  protected updateExpiredItemQuality() {}
 }
 
 function createItemAger(item: Item): ItemAger {
