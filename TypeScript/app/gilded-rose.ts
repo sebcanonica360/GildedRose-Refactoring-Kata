@@ -10,6 +10,22 @@ export class Item {
   }
 }
 
+class EnrichedItem {
+  private readonly _item:Item;
+
+  constructor(item:Item) {
+    this._item = item;
+  }
+
+  public updateQuality() {
+
+  }
+}
+
+class AgedBrieEnrichedItem extends EnrichedItem {
+
+}
+
 export class GildedRose {
   items: Array<Item>;
 
