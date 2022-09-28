@@ -18,42 +18,36 @@ class QualityUpdater {
   }
 
   updateQuality() {
-    if (this._item.name != 'Backstage passes to a TAFKAL80ETC concert') {
-      this.decreaseQuality();
-    } else {
-      this.increaseQuality();
-      if (this._item.name == 'Backstage passes to a TAFKAL80ETC concert') {
-        if (this._item.sellIn < 11) {
-          this.increaseQuality();
-        }
-        if (this._item.sellIn < 6) {
-          this.increaseQuality();
-        }
-      }
-    }
-    if (this._item.name != 'Sulfuras, Hand of Ragnaros') {
-      this._item.sellIn = this._item.sellIn - 1;
-    }
+    this.decreaseQuality();
+    this._item.sellIn = this._item.sellIn - 1;
+
     if (this._item.sellIn < 0) {
-      if (this._item.name != 'Backstage passes to a TAFKAL80ETC concert') {
-        this.decreaseQuality();
-      } else {
-        this._item.quality = 0;
-      }
+      this.decreaseQuality();
     }
   }
 
   protected decreaseQuality() {
     if (this._item.quality > 0) {
-      if (this._item.name != 'Sulfuras, Hand of Ragnaros') {
-        this._item.quality = this._item.quality - 1
-      }
+      this._item.quality = this._item.quality - 1
     }
   }
 
   protected increaseQuality() {
     if (this._item.quality < 50) {
       this._item.quality = this._item.quality + 1
+    }
+  }
+}
+
+class ConjureQualityUpdater extends QualityUpdater {
+  updateQuality() {
+    this.decreaseQuality();
+    this.decreaseQuality();
+    this._item.sellIn = this._item.sellIn - 1;
+
+    if (this._item.sellIn < 0) {
+      this.decreaseQuality();
+      this.decreaseQuality();
     }
   }
 }
@@ -84,6 +78,10 @@ class BackstageQualityUpdate extends QualityUpdater {
   }
 }
 
+class SulfurasQualityUpdater extends QualityUpdater {
+  updateQuality() {}
+}
+
 export class GildedRose {
   items: Array<Item>;
 
@@ -100,6 +98,12 @@ export class GildedRose {
           break;
         case "Backstage passes to a TAFKAL80ETC concert":
           qualityUpdater = new BackstageQualityUpdate(this.items[i]);
+          break;
+        case "Sulfuras, Hand of Ragnaros":
+          qualityUpdater = new SulfurasQualityUpdater(this.items[i]);
+          break;
+        case "Conjured Mana Cake":
+          qualityUpdater = new ConjureQualityUpdater(this.items[i]);
           break;
         default:
           qualityUpdater = new QualityUpdater(this.items[i]);
