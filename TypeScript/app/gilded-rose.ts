@@ -10,7 +10,7 @@ export class Item {
   }
 }
 
-class EnrichedItem {
+class QualityUpdater {
   private readonly _item:Item;
 
   constructor(item:Item) {
@@ -29,14 +29,10 @@ class EnrichedItem {
       this._item.quality = this._item.quality + 1
       if (this._item.name == 'Backstage passes to a TAFKAL80ETC concert') {
         if (this._item.sellIn < 11) {
-          if (this._item.quality < 50) {
-            this._item.quality = this._item.quality + 1
-          }
+          this.increaseQuality();
         }
         if (this._item.sellIn < 6) {
-          if (this._item.quality < 50) {
-            this._item.quality = this._item.quality + 1
-          }
+          this.increaseQuality()
         }
       }
     }
@@ -47,24 +43,32 @@ class EnrichedItem {
     if (this._item.sellIn < 0) {
       if (this._item.name != 'Aged Brie') {
         if (this._item.name != 'Backstage passes to a TAFKAL80ETC concert') {
-          if (this._item.quality > 0) {
-            if (this._item.name != 'Sulfuras, Hand of Ragnaros') {
-              this._item.quality = this._item.quality - 1
-            }
-          }
+          this.decreaseQuality();
         } else {
           this._item.quality = this._item.quality - this._item.quality
         }
       } else {
-        if (this._item.quality < 50) {
-          this._item.quality = this._item.quality + 1
-        }
+        this.increaseQuality()
       }
+    }
+  }
+
+  private decreaseQuality() {
+    if (this._item.quality > 0) {
+      if (this._item.name != 'Sulfuras, Hand of Ragnaros') {
+        this._item.quality = this._item.quality - 1
+      }
+    }
+  }
+
+  private increaseQuality() {
+    if (this._item.quality < 50) {
+      this._item.quality = this._item.quality + 1
     }
   }
 }
 
-class AgedBrieEnrichedItem extends EnrichedItem {
+class AgedBrieEnrichedItem extends QualityUpdater {
 
 }
 
@@ -77,8 +81,8 @@ export class GildedRose {
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
-      const enrichedItem = new EnrichedItem(this.items[i]);
-      enrichedItem.updateQuality();
+      const qualityUpdater = new QualityUpdater(this.items[i]);
+      qualityUpdater.updateQuality();
     }
 
     return this.items;
