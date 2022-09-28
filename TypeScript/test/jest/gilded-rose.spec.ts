@@ -31,7 +31,7 @@ describe('Gilded Rose', () => {
       items.forEach(item => actual.push((`${item.name}, ${item.sellIn}, ${item.quality}`)));
       gildedRose.updateQuality();
     }
-    actual;
+
     const expected = `
 -------- day 0 --------
 name, sellIn, quality
