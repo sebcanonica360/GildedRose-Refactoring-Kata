@@ -11,15 +11,13 @@ export class Item {
 }
 
 class BaseQualityUpdater {
-  private readonly _item:Item;
+  protected readonly _item:Item;
   constructor (item:Item) {
     this._item = item;
   }
 
   updateExpiredQuality() {
-    if (this._item.name === 'Aged Brie') {
-      this.increaseQuality();
-    } else if (this._item.name === 'Backstage passes to a TAFKAL80ETC concert') {
+    if (this._item.name === 'Backstage passes to a TAFKAL80ETC concert') {
       this._item.quality = 0;
     } else if (this._item.name === 'Sulfuras, Hand of Ragnaros') {
     } else {
@@ -35,9 +33,7 @@ class BaseQualityUpdater {
   }
 
   updateNormalQuality() {
-    if (this._item.name === 'Aged Brie') {
-      this.increaseQuality();
-    } else if (this._item.name === 'Backstage passes to a TAFKAL80ETC concert') {
+    if (this._item.name === 'Backstage passes to a TAFKAL80ETC concert') {
       this.increaseQuality();
       if (this._item.sellIn < 11) {
         this.increaseQuality();
@@ -51,16 +47,30 @@ class BaseQualityUpdater {
     }
   }
 
-  private increaseQuality() {
+  protected increaseQuality() {
     if (this._item.quality < 50) {
       this._item.quality = this._item.quality + 1;
     }
   }
 
-  private decreaseQuality() {
+  protected decreaseQuality() {
     if (this._item.quality > 0) {
       this._item.quality = this._item.quality - 1;
     }
+  }
+}
+
+class AgedBrieQualityUpdater extends BaseQualityUpdater {
+  constructor (item:Item) {
+    super(item);
+  }
+
+  updateExpiredQuality() {
+    this.increaseQuality();
+  }
+
+  updateNormalQuality() {
+    this.increaseQuality();
   }
 }
 
@@ -84,6 +94,9 @@ export class GildedRose {
     return this.items;
   }
   buildQualityUpdater(item: Item) {
+    if (item.name === 'Aged Brie') {
+      return new AgedBrieQualityUpdater(item)
+    }
     return new BaseQualityUpdater(item);
   }
 
