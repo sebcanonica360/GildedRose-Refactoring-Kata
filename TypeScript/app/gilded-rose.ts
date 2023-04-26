@@ -23,16 +23,16 @@ export class GildedRose {
         this.increaseQuality(item);
       } else if (item.name === 'Backstage passes to a TAFKAL80ETC concert') {
         this.increaseQuality(item);
-        if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
-          if (item.sellIn < 11) {
-            this.increaseQuality(item);
-          }
-          if (item.sellIn < 6) {
-            this.increaseQuality(item);
-          }
+        if (item.sellIn < 11) {
+          this.increaseQuality(item);
+        }
+        if (item.sellIn < 6) {
+          this.increaseQuality(item);
         }
       } else {
-        this.decreaseQuality(item);
+        if (item.name != 'Sulfuras, Hand of Ragnaros') {
+          this.decreaseQuality(item);
+        }
       }
       if (item.name != 'Sulfuras, Hand of Ragnaros') {
         item.sellIn = item.sellIn - 1;
@@ -43,7 +43,9 @@ export class GildedRose {
         } else if (item.name === 'Backstage passes to a TAFKAL80ETC concert') {
           item.quality = 0
         } else {
-          this.decreaseQuality(item);
+          if (item.name != 'Sulfuras, Hand of Ragnaros') {
+            this.decreaseQuality(item);
+          }
         }
       }
     });
@@ -60,32 +62,7 @@ export class GildedRose {
 
   private decreaseQuality(item: Item) {
     if (item.quality > 0) {
-      if (item.name != 'Sulfuras, Hand of Ragnaros') {
-        item.quality = item.quality - 1;
-      }
+      item.quality = item.quality - 1;
     }
   }
-  // getDailyQualityChange(item: Item) {
-  //   let change: number;
-  //   switch(item.name) {
-  //     case "Aged Brie":
-  //       change = 1;
-  //     case "Backstage passes to a TAFKAL80ETC concert":
-  //       if (item.sellIn < 1) {
-  //         change = - item.quality;
-  //       }
-  //       if (item.sellIn < 6) {
-  //         change = 3;
-  //       } else if (item.sellIn < 11) {
-  //         change = 2;
-  //       } else {
-  //         change =
-  //       }
-
-  //     case "Sulfuras, Hand of Ragnaros":
-  //     case "Conjured Mana Cake":
-  //     default:
-
-  //   }
-  // }
 }
