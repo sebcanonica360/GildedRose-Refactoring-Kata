@@ -29,10 +29,9 @@ export class GildedRose {
         if (item.sellIn < 6) {
           this.increaseQuality(item);
         }
+      } else if (item.name === 'Sulfuras, Hand of Ragnaros') {
       } else {
-        if (item.name != 'Sulfuras, Hand of Ragnaros') {
-          this.decreaseQuality(item);
-        }
+        this.decreaseQuality(item);
       }
       if (item.name != 'Sulfuras, Hand of Ragnaros') {
         item.sellIn = item.sellIn - 1;
